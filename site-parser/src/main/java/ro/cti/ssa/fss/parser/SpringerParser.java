@@ -15,8 +15,13 @@ public class SpringerParser extends ArticleParser {
 
     private static final String TITLE_ID = "abstract-about-title";
     private static final String AUTHOR_CLASS = "author";
-    private static final String ABSTRACT_CONTAINER_CLASS = "abstract-content formatted";
+    private static final String ITEMPROP_CLASS = "itemprop";
+    private static final String ITEMPROP_VALUE = "description";
     private static final String ABSTRACT_CLASS = "a-plus-plus";
+    private static final String KEYWORDS_CLASS = "abstract-keywords";
+    private static final String TAG_LI = "li";
+    private static final String PUBLICATION_ID = "publication-title";
+    private static final String TAG_A = "a";
 
     public SpringerParser(Document document) {
         super(document);
@@ -46,32 +51,42 @@ public class SpringerParser extends ArticleParser {
     @Override
     public String getArticleAbstract() {
 
-        Element articleAbstract = document.getElementsByClass(ABSTRACT_CONTAINER_CLASS).first();
-        System.out.println("__"+document.getElementsByClass(ABSTRACT_CONTAINER_CLASS).html()+"|");
-        System.out.println(articleAbstract);
-        Elements element = articleAbstract.getElementsByTag(ABSTRACT_CLASS);
-        return articleAbstract.getElementsByTag(ABSTRACT_CLASS).first().text();
+        Element articleAbstract = document.getElementsByAttributeValue(ITEMPROP_CLASS,ITEMPROP_VALUE).first();
+        Elements elements = articleAbstract.getElementsByClass(ABSTRACT_CLASS);
+        return elements.first().text();
 
     }
 
     @Override
     public List<String> getKeywords() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        List<String> articleKeywords = new ArrayList<String>();
+
+        Element keywordsContainer = document.getElementsByClass(KEYWORDS_CLASS).first();
+        Elements keywords = keywordsContainer.getElementsByTag(TAG_LI);
+
+        for (Element keyword : keywords)
+            articleKeywords.add(keyword.text());
+
+        return articleKeywords;
     }
 
     @Override
     public String getPublication() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        Element publicationContainer = document.getElementById(PUBLICATION_ID);
+        return publicationContainer.getElementsByTag(TAG_A).first().text();
+
     }
 
     @Override
     public String getPublicationDate() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     public String getDetails() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     private String commaClear(String text){

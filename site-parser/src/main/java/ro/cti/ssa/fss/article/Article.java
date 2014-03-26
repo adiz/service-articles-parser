@@ -80,7 +80,7 @@ public class Article {
           .append("Authors: "+getAuthors()+"\n")
           .append("Article Abstract: "+getArticleAbstract()+"\n")
           .append("Keywords: "+getKeywords()+"\n")
-          .append("Publication :"+getPublication()+"\n")
+          .append("Publication: "+getPublication()+"\n")
           .append("Publication Date: "+getPublicationDate()+"\n")
           .append("Details: "+getDetails()+"\n")
           .append("[----------------------------------]\n");
