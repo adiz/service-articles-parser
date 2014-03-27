@@ -22,6 +22,7 @@ public class SpringerParser extends ArticleParser {
     private static final String TAG_LI = "li";
     private static final String PUBLICATION_ID = "publication-title";
     private static final String TAG_A = "a";
+    private static final String COPYRIGHT_YEAR_ID = "abstract-about-book-chapter-copyright-year";
 
     public SpringerParser(Document document) {
         super(document);
@@ -81,12 +82,10 @@ public class SpringerParser extends ArticleParser {
 
     @Override
     public String getPublicationDate() {
-        return null;
-    }
 
-    @Override
-    public String getDetails() {
-        return null;
+        Element year = document.getElementById(COPYRIGHT_YEAR_ID);
+        return year.text();
+
     }
 
     private String commaClear(String text){

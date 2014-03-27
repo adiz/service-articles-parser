@@ -30,7 +30,9 @@ public abstract class ArticleParser {
 
     public abstract String getPublicationDate();
 
-    public abstract String getDetails();
+    public String getDetails(){
+        return document.baseUri();
+    }
 
     public Article createArticle(){
 
