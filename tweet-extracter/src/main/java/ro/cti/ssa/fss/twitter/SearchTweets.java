@@ -10,9 +10,12 @@ public class SearchTweets {
      *
      * @param args
      */
+
+    private static final String HASHTAG = "%23";
+
     public static void main(String[] args) {
 
-        String twitterQuery = "https://twitter.com/search?q=hashtag=Journal";
+        String twitterQuery = "https://twitter.com/search?q="+HASHTAG+"Journal";
 
         Twitter twitter = new TwitterFactory().getInstance();
         try {
@@ -21,6 +24,7 @@ public class SearchTweets {
             do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
+                System.out.println("NO TWEETS: "+tweets.size());
                 for (Status tweet : tweets) {
                     System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
                 }

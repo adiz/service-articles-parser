@@ -1,0 +1,143 @@
+<noinclude>
+This is the "article" template.
+It should be called in the following format:
+<pre>
+{{article
+|title=
+|author=
+|authors=
+|abstract=
+|keyword=
+|keywords=
+|published_in=
+|publication_date=
+|editor=
+|editors=
+|organization=
+|organizations=
+|publisher=
+|event=
+|download=
+|more_details=
+}}
+</pre>
+Edit the page to see the template text.
+Empty fields will not show.
+</noinclude><includeonly>{| class="wikitable"
+{{#if:{{{title|}}}
+ |
+ ! Title:
+{{!}} [[Sske/hasTitle::{{{title|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{author|}}}
+ |
+ ! Author:
+{{!}} [[Sske/hasAuthor::{{{author|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{authors|}}}
+ |
+ ! Authors:
+{{!}} {{#arraymap:{{{authors|}}}|,|x|[[Sske/hasAuthor::x]]}}
+{{!}}-
+ |
+}}
+{{#if:{{{abstract|}}}
+ |
+ ! Abstract:
+{{!}} {{{abstract|}}}
+{{!}}-
+ |
+}}
+{{#if:{{{keyword|}}}
+ |
+ ! Keyword:
+{{!}} [[Sske/hasKeyword::{{{keyword|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{keywords|}}}
+ |
+ ! Keywords:
+{{!}} {{#arraymap:{{{keywords|}}}|,|x|[[Sske/hasKeyword::x]]}}
+{{!}}-
+ |
+}}
+{{#if:{{{published_in|}}}
+ |
+ ! Published in:
+{{!}} [[Sske/isPublishedIn::{{{published_in|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{publication_date|}}}
+ |
+ ! Publication date:
+{{!}} [[Sske/hasPublicationDate::{{{publication_date|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{editor|}}}
+ |
+ ! Editor:
+{{!}} [[Sske/hasEditor::{{{editor|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{editors|}}}
+ |
+ ! Editors:
+{{!}} {{#arraymap:{{{editors|}}}|,|x|[[Sske/hasEditor::x]]}}
+{{!}}-
+ |
+}}
+{{#if:{{{organization|}}}
+ |
+ ! Organization:
+{{!}} [[Sske/isPreparedByOrganization::{{{organization|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{organizations|}}}
+ |
+ ! Organizations:
+{{!}} {{#arraymap:{{{organizations|}}}|,|x|[[Sske/isPreparedByOrganization::x]]}}
+{{!}}-
+ |
+}}
+{{#if:{{{publisher|}}}
+ |
+ ! Publisher:
+{{!}} [[Sske/hasPublisher::{{{publisher|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{event|}}}
+ |
+ ! Event:
+{{!}} [[Sske/isRelatedToEvent::{{{event|}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{download|}}}
+ |
+ ! Download:
+{{!}} [[Media:{{{download}}}|{{{download}}}]]
+{{!}}-
+ |
+}}
+{{#if:{{{more_details|}}}
+ |
+ ! More details:
+{{!}} {{{more_details|}}}
+{{!}}}
+ |
+}}
+
+[[Category:Sske/Article]]
+
+__SHOWFACTBOX__
+</includeonly>

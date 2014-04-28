@@ -1,7 +1,12 @@
 package ro.cti.ssa.fss.parser;
 
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,42 +15,164 @@ import java.util.List;
  */
 public class ACMDLParser extends ArticleParser{
 
+    private static final String META_TAG = "meta";
+    private static final String NAME_ATTR = "name";
+    private static final String CONTENT_ATTR = "content";
+
+    private static final String TITLE_NAME_VALUE = "citation_title";
+    private static final String AUTHORS_NAME_VALUE = "citation_authors";
+    private static final String PUBLICATION_NAME_VALUE = "citation_journal_title";
+    private static final String PUBLISHER_NAME_VALUE = "citation_publisher";
+    private static final String PUBLICATION_DATE_NAME_VALUE = "citation_date";
+    private static final String EVENT_NAME_VALUE = "citation_conference";
+    private static final String DOWNLOAD_LINK_NAME_VALUE = "citation_pdf_url";
+
+    private static final String TAG_P = "p";
+
+    private Elements metadata;
+
     public ACMDLParser(Document document) {
         super(document);
+        metadata = document.getElementsByTag(META_TAG);
     }
 
     @Override
     public String getTitle() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        try{
+            Element title = metadata.select("["+NAME_ATTR+"="+TITLE_NAME_VALUE+"]").first();
+            return title.attr(CONTENT_ATTR);
+        } catch(Exception e){
+            return null;
+        }
+
     }
 
     @Override
     public List<String> getAuthors() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        try{
+            Element authors = metadata.select("["+NAME_ATTR+"="+AUTHORS_NAME_VALUE+"]").first();
+            return convertAuthorsListToArray(authors.attr(CONTENT_ATTR));
+        } catch(Exception e){
+            return null;
+        }
+
     }
 
     @Override
     public String getArticleAbstract() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        try {
+            String articleAbstractURL = getArticleAbstractURL();
+            Document abstractDiv = Jsoup.connect(articleAbstractURL).userAgent("Mozilla").get();
+            return abstractDiv.getElementsByTag(TAG_P).first().text();
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override
     public List<String> getKeywords() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     public String getPublication() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        try {
+            Element publication = metadata.select("["+NAME_ATTR+"="+PUBLICATION_NAME_VALUE+"]").first();
+            return publication.attr(CONTENT_ATTR);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override
     public String getPublicationDate() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+
+        try {
+            Element publicationDate = metadata.select("["+NAME_ATTR+"="+PUBLICATION_DATE_NAME_VALUE+"]").first();
+            return publicationDate.attr(CONTENT_ATTR);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     @Override
-    public String getDetails() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public String getPublisher() {
+
+        try {
+            Element publisher = metadata.select("["+NAME_ATTR+"="+PUBLISHER_NAME_VALUE+"]").first();
+            return publisher.attr(CONTENT_ATTR);
+        } catch (Exception e) {
+            return null;
+        }
+
     }
+
+    @Override
+    public List<String> getEditors() {
+        return null;
+    }
+
+    @Override
+    public List<String> getOrganizations() {
+        return null;
+    }
+
+    @Override
+    public String getEvent() {
+
+        try {
+            Element event = metadata.select("["+NAME_ATTR+"="+EVENT_NAME_VALUE+"]").first();
+            return event.attr(CONTENT_ATTR);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    @Override
+    public String getDownloadLink() {
+
+        try {
+            Element downloadLink = metadata.select("["+NAME_ATTR+"="+DOWNLOAD_LINK_NAME_VALUE+"]").first();
+            return downloadLink.attr(CONTENT_ATTR);
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
+
+    private List<String> convertAuthorsListToArray(String authorsList) {
+
+        List<String> authors = new ArrayList<String>();
+
+        String[] initialNames = authorsList.split("; ");
+        for (int index=0; index<initialNames.length; index++){
+            String initialName = initialNames[index];
+            String[] splitName = initialName.split(", ");
+            authors.add(splitName[1]+" "+splitName[0]);
+        }
+
+        return authors;
+    }
+
+    private String getArticleAbstractURL() {
+
+        String articleURL = document.baseUri();
+        String[] domains = articleURL.split("/");
+        String baseURL = domains[2];
+
+        String[] components = domains[3].split("\\.");
+        String articleID = components[components.length-1];
+
+        return "http://"+baseURL+"/tab_abstract.cfm?id="+articleID;
+
+    }
+
 }

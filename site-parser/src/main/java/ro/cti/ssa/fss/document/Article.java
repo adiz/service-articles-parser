@@ -1,4 +1,4 @@
-package ro.cti.ssa.fss.article;
+package ro.cti.ssa.fss.document;
 
 import java.util.List;
 
@@ -14,6 +14,11 @@ public class Article {
     private List<String> keywords;
     private String publication;
     private String publicationDate;
+    private String publisher;
+    private List<String> editors;
+    private List<String> organizations;
+    private String event;
+    private String downloadLink;
     private String details;
 
     public String getTitle() {
@@ -64,6 +69,46 @@ public class Article {
         this.publicationDate = publicationDate;
     }
 
+    public String getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<String> getEditors() {
+        return editors;
+    }
+
+    public void setEditors(List<String> editors) {
+        this.editors = editors;
+    }
+
+    public List<String> getOrganizations() {
+        return organizations;
+    }
+
+    public void setOrganizations(List<String> organizations) {
+        this.organizations = organizations;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public void setEvent(String event) {
+        this.event = event;
+    }
+
+    public String getDownloadLink() {
+        return downloadLink;
+    }
+
+    public void setDownloadLink(String downloadLink) {
+        this.downloadLink = downloadLink;
+    }
+
     public String getDetails() {
         return details;
     }
@@ -82,6 +127,11 @@ public class Article {
           .append("Keywords: "+getKeywords()+"\n")
           .append("Publication: "+getPublication()+"\n")
           .append("Publication Date: "+getPublicationDate()+"\n")
+          .append("Publisher: "+getPublisher()+"\n")
+          .append("Editors: "+getEditors()+"\n")
+          .append("Organizations: "+getOrganizations()+"\n")
+          .append("Event: "+getEvent()+"\n")
+          .append("Download Link: "+getDownloadLink()+"\n")
           .append("Details: "+getDetails()+"\n")
           .append("[----------------------------------]\n");
 

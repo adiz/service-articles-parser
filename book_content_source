@@ -1,0 +1,70 @@
+<noinclude>
+This is the "book" template.
+It should be called in the following format:
+<pre>
+{{book
+|title=
+|author=
+|authors=
+|abstract=
+|keyword=
+|keywords=
+|published_in=
+|publication_date=
+|editor=
+|editors=
+|organization=
+|organizations=
+|publisher=
+|event=
+|book_cover=
+|no_pages=
+|download=
+|more_details=
+|book_cover=
+}}
+</pre>
+Edit the page to see the template text.
+Empty fields will not show.
+</noinclude><includeonly>{{#if:{{{book_cover|}}}
+|[[File:{{{book_cover|}}}{{!}}border{{!}}right{{!}}200px]]
+|}}{{#if:{{{title|}}}
+|<p>'''Title''': [[Sske/hasTitle::{{{title|}}}]]</p>
+|}}{{#if:{{{author|}}}
+|<p>'''Author''': [[Sske/hasAuthor::{{{author|}}}]]</p>
+|}}{{#if:{{{authors|}}}
+|<p>'''Authors''': {{#arraymap:{{{authors|}}}|,|x|[[Sske/hasAuthor::x]]}}</p>
+|}}{{#if:{{{editor|}}}
+|<p>'''Editor''': [[Sske/hasEditor::{{{editor|}}}]]</p>
+|}}{{#if:{{{editors|}}}
+|<p>'''Editors''': {{#arraymap:{{{editors|}}}|,|x|[[Sske/hasEditor::x]]}}</p>
+|}}{{#if:{{{organization|}}}
+|<p>'''Organization''': [[Sske/isPreparedByOrganization::{{{organization|}}}]]</p>
+|}}{{#if:{{{organizations|}}}
+|<p>'''Organizations''': {{#arraymap:{{{organizations|}}}|,|x|[[Sske/isPreparedByOrganization::x]]}}</p>|}}{{#if:{{{publisher|}}}
+|<p>'''Publisher''': [[Sske/hasPublisher::{{{publisher|}}}]]</p>
+|}}{{#if:{{{published_in|}}}
+|<p>'''Published in''': [[Sske/isPublishedIn::{{{published_in|}}}]]</p>
+|}}{{#if:{{{publication_date|}}}
+|<p>'''Publication date''': [[Sske/hasPublicationDate::{{{publication_date|}}}]]</p>
+|}}{{#if:{{{no_pages|}}}
+|<p>'''Number of pages''': {{{no_pages|}}}</p>
+|}}{{#if:{{{abstract|}}}
+|<p>'''Abstract''': {{{abstract|}}}</p>
+|}}{{#if:{{{keyword|}}}
+|<p>'''Keyword''': [[Sske/hasKeyword::{{{keyword|}}}]]</p>
+|}}{{#if:{{{keywords|}}}
+|<p>'''Keywords''': {{#arraymap:{{{keywords|}}}|,|x|[[Sske/hasKeyword::x]]}}</p>
+|}}{{#if:{{{event|}}}
+|<p>'''Event''': [[Sske/isRelatedToEvent::{{{event|}}}]]</p>
+|}}{{#if:{{{download|}}}
+|<p>'''Download''': [[Media:{{{download}}}|{{{download}}}]]</p>
+|}}{{#if:{{{more_details|}}}
+|<p>'''More details''': {{{more_details|}}}</p>
+|}}
+
+
+[[Category:Sske/Book]]
+
+__SHOWFACTBOX__
+</includeonly>

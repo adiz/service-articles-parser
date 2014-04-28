@@ -23,6 +23,9 @@ public class SpringerParser extends ArticleParser {
     private static final String PUBLICATION_ID = "publication-title";
     private static final String TAG_A = "a";
     private static final String COPYRIGHT_YEAR_ID = "abstract-about-book-chapter-copyright-year";
+    private static final String PUBLISHER_ID = "abstract-about-publisher";
+    private static final String EDITORS_CLASS = "editors";
+    private static final String PERSON_CLASS = "person";
 
     public SpringerParser(Document document) {
         super(document);
@@ -31,8 +34,12 @@ public class SpringerParser extends ArticleParser {
     @Override
     public String getTitle() {
 
-        Element title = document.getElementById(TITLE_ID);
-        return title.text();
+        try{
+            Element title = document.getElementById(TITLE_ID);
+            return title.text();
+        } catch(Exception e){
+            return null;
+        }
 
     }
 
@@ -41,9 +48,13 @@ public class SpringerParser extends ArticleParser {
 
         List<String> articleAuthors = new ArrayList<String>();
 
-        Elements authors = document.getElementsByClass(AUTHOR_CLASS);
-        for (Element author : authors)
-            articleAuthors.add(commaClear(author.text()));
+        try{
+            Elements authors = document.getElementsByClass(AUTHOR_CLASS);
+            for (Element author : authors)
+                articleAuthors.add(commaClear(author.text()));
+        } catch(Exception e){
+            return null;
+        }
 
         return articleAuthors;
 
@@ -52,9 +63,13 @@ public class SpringerParser extends ArticleParser {
     @Override
     public String getArticleAbstract() {
 
-        Element articleAbstract = document.getElementsByAttributeValue(ITEMPROP_CLASS,ITEMPROP_VALUE).first();
-        Elements elements = articleAbstract.getElementsByClass(ABSTRACT_CLASS);
-        return elements.first().text();
+        try{
+            Element articleAbstract = document.getElementsByAttributeValue(ITEMPROP_CLASS,ITEMPROP_VALUE).first();
+            Elements elements = articleAbstract.getElementsByClass(ABSTRACT_CLASS);
+            return elements.first().text();
+        } catch(Exception e){
+            return null;
+        }
 
     }
 
@@ -63,11 +78,14 @@ public class SpringerParser extends ArticleParser {
 
         List<String> articleKeywords = new ArrayList<String>();
 
-        Element keywordsContainer = document.getElementsByClass(KEYWORDS_CLASS).first();
-        Elements keywords = keywordsContainer.getElementsByTag(TAG_LI);
-
-        for (Element keyword : keywords)
-            articleKeywords.add(keyword.text());
+        try{
+            Element keywordsContainer = document.getElementsByClass(KEYWORDS_CLASS).first();
+            Elements keywords = keywordsContainer.getElementsByTag(TAG_LI);
+            for (Element keyword : keywords)
+                articleKeywords.add(keyword.text());
+        } catch(Exception e){
+            return null;
+        }
 
         return articleKeywords;
     }
@@ -75,17 +93,69 @@ public class SpringerParser extends ArticleParser {
     @Override
     public String getPublication() {
 
-        Element publicationContainer = document.getElementById(PUBLICATION_ID);
-        return publicationContainer.getElementsByTag(TAG_A).first().text();
+        try{
+            Element publicationContainer = document.getElementById(PUBLICATION_ID);
+            return publicationContainer.getElementsByTag(TAG_A).first().text();
+        } catch(Exception e){
+            return null;
+        }
 
     }
 
     @Override
     public String getPublicationDate() {
 
-        Element year = document.getElementById(COPYRIGHT_YEAR_ID);
-        return year.text();
+        try{
+            Element year = document.getElementById(COPYRIGHT_YEAR_ID);
+            return year.text();
+        } catch(Exception e){
+            return null;
+        }
 
+    }
+
+    @Override
+    public String getPublisher() {
+
+        try{
+            Element publisher = document.getElementById(PUBLISHER_ID);
+            return publisher.text();
+        } catch(Exception e){
+            return null;
+        }
+
+    }
+
+    @Override
+    public List<String> getEditors() {
+
+        List<String> articleEditors = new ArrayList<String>();
+
+        try{
+            Elements editors = document.getElementsByClass(EDITORS_CLASS).select("[class="+PERSON_CLASS+"]");
+            for (Element editor : editors)
+                articleEditors.add(editor.text());
+        } catch(Exception e){
+            return null;
+        }
+
+        return articleEditors;
+
+    }
+
+    @Override
+    public List<String> getOrganizations() {
+        return null;
+    }
+
+    @Override
+    public String getEvent() {
+        return null;
+    }
+
+    @Override
+    public String getDownloadLink() {
+        return null;
     }
 
     private String commaClear(String text){

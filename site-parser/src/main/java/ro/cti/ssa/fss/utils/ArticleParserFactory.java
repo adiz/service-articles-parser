@@ -1,9 +1,7 @@
 package ro.cti.ssa.fss.utils;
 
 import org.jsoup.Jsoup;
-import ro.cti.ssa.fss.parser.ACMDLParser;
-import ro.cti.ssa.fss.parser.ArticleParser;
-import ro.cti.ssa.fss.parser.SpringerParser;
+import ro.cti.ssa.fss.parser.*;
 
 import java.io.IOException;
 
@@ -13,26 +11,28 @@ import java.io.IOException;
  */
 public class ArticleParserFactory {
 
+    private static final String USER_AGENT = "Mozilla";
+
     public static ArticleParser getArticleParser(String url) throws IOException {
 
-        if (getDomainName(url).equals(Domains.SPRINGER))
-            return new SpringerParser(Jsoup.connect(url).get());
-        else if (getDomainName(url).equals(Domains.ACM_DL))
-            return new ACMDLParser(Jsoup.connect(url).get());
-        else
-            return null;
+        switch (Domains.getDomainName(url)){
 
-    }
+            case SPRINGER:
+                return new SpringerParser(Jsoup.connect(url).get());
 
-    private static String getDomainName(String url) {
+            case ACM_DL:
+                return new ACMDLParser(Jsoup.connect(url).userAgent(USER_AGENT).get());
 
-        if (url.startsWith("http://link.springer.com/article") || url.startsWith("http://link.springer.com/chapter"))
-            return Domains.SPRINGER;
-        else if (url.startsWith("http://dl.acm.org/citation"))
-            return Domains.ACM_DL;
-        else
-            return "null";
+            case SCIENCE_DIRECT:
+                return new ScienceDirectParser(Jsoup.connect(url).get());
 
+            case IGI_GLOBAL:
+                return new IGIGlobalParser(Jsoup.connect(url).get());
+
+            default:
+                return null;
+
+        }
     }
 
 }

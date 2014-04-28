@@ -1,8 +1,7 @@
 package ro.cti.ssa.fss.parser;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import ro.cti.ssa.fss.article.Article;
+import ro.cti.ssa.fss.document.Article;
 
 import java.util.List;
 
@@ -30,6 +29,16 @@ public abstract class ArticleParser {
 
     public abstract String getPublicationDate();
 
+    public abstract String getPublisher();
+
+    public abstract List<String> getEditors();
+
+    public abstract List<String> getOrganizations();
+
+    public abstract String getEvent();
+
+    public abstract String getDownloadLink();
+
     public String getDetails(){
         return document.baseUri();
     }
@@ -44,6 +53,11 @@ public abstract class ArticleParser {
         article.setKeywords(getKeywords());
         article.setPublication(getPublication());
         article.setPublicationDate(getPublicationDate());
+        article.setPublisher(getPublisher());
+        article.setEditors(getEditors());
+        article.setOrganizations(getOrganizations());
+        article.setEvent(getEvent());
+        article.setDownloadLink(getDownloadLink());
         article.setDetails(getDetails());
 
         return article;
